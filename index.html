@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>VVY Mentor - Student Connect App</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -13,8 +13,9 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-192.png">
 <style>
-html,body{margin:0;height:100%;background:#F4F6F8}
-iframe{position:fixed;top:0;left:0;width:100%;height:100%;border:0}
+html{height:100%;overflow:hidden;overscroll-behavior:none;background:#F4F6F8}
+body{margin:0;position:fixed;top:0;left:0;right:0;bottom:0;overflow:hidden;overscroll-behavior:none;background:#F4F6F8}
+iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block}
 .msg{font-family:system-ui,-apple-system,sans-serif;padding:60px 24px;text-align:center;color:#556274}
 </style>
 </head>
@@ -39,6 +40,11 @@ if (!k) {
   f.src = APP + '?k=' + encodeURIComponent(k);
   f.title = 'VVY Mentor - Student Connect App';
   document.body.appendChild(f);
+  var settle = function () { if (window.visualViewport && window.visualViewport.scale > 1.01) return; if (window.scrollX || window.scrollY) window.scrollTo(0, 0); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; };
+  window.addEventListener('scroll', settle, { passive: true });
+  window.addEventListener('focus', settle);
+  if (window.visualViewport) { window.visualViewport.addEventListener('resize', settle); }
+  setInterval(settle, 1000);
 }
 </script>
 </body>
