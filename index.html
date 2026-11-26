@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>VVY Mentor Connect</title>
+<title>VVY Mentor - Student Connect App</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="VVY Mentor">
@@ -24,20 +24,20 @@ var APP = 'https://script.google.com/macros/s/AKfycbx1CbgLCGyuGj26cJGkNQrU0OgRbD
 var k = new URLSearchParams(location.search).get('k');
 try { if (k) localStorage.setItem('vvy_k', k); else k = localStorage.getItem('vvy_k'); } catch (e) {}
 if (!k) {
-  document.body.innerHTML = '<div class="msg"><img src="icon-192.png" width="96" height="96" alt="VVY logo"><h2>VVY Mentor Connect</h2>' +
+  document.body.innerHTML = '<div class="msg"><img src="icon-192.png" width="96" height="96" alt="VVY logo"><h2>VVY Mentor - Student Connect App</h2>' +
     '<p>Please open your personal link sent by the VVY core team, or paste it here:</p>' +
     '<input id="lk" placeholder="Paste your personal link" style="width:100%;max-width:360px;box-sizing:border-box;padding:12px;border:1px solid #CBD5E1;border-radius:10px;font-size:15px">' +
     '<p><button id="go" style="height:44px;padding:0 20px;border:0;border-radius:10px;background:#0F766E;color:#fff;font-size:15px;font-weight:600">Open</button></p></div>';
   document.getElementById('go').onclick = function () {
     var v = document.getElementById('lk').value.trim(), m = v.match(/[?&]k=([0-9a-zA-Z]+)/), key = m ? m[1] : (/^[0-9a-zA-Z]{20,}$/.test(v) ? v : '');
-    if (!key) { alert('That does not look like a VVY Mentor Connect link.'); return; }
+    if (!key) { alert('That does not look like a VVY Mentor - Student Connect App link.'); return; }
     try { localStorage.setItem('vvy_k', key); } catch (e) {}
     location.replace(location.pathname + '?k=' + key);
   };
 } else {
   var f = document.createElement('iframe');
   f.src = APP + '?k=' + encodeURIComponent(k);
-  f.title = 'VVY Mentor Connect';
+  f.title = 'VVY Mentor - Student Connect App';
   document.body.appendChild(f);
 }
 </script>
