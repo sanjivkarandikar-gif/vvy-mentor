@@ -12,7 +12,6 @@
 <meta name="robots" content="noindex">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" type="image/png" href="icon-192.png">
-<link rel="manifest" href="manifest.json">
 <style>
 html,body{margin:0;height:100%;background:#F4F6F8}
 iframe{position:fixed;top:0;left:0;width:100%;height:100%;border:0}
@@ -25,7 +24,16 @@ var APP = 'https://script.google.com/macros/s/AKfycbx1CbgLCGyuGj26cJGkNQrU0OgRbD
 var k = new URLSearchParams(location.search).get('k');
 try { if (k) localStorage.setItem('vvy_k', k); else k = localStorage.getItem('vvy_k'); } catch (e) {}
 if (!k) {
-  document.body.innerHTML = '<div class="msg"><img src="icon-192.png" width="96" height="96" alt="VVY logo"><h2>VVY Mentor Connect</h2><p>Please open your personal link sent by the VVY core team.</p></div>';
+  document.body.innerHTML = '<div class="msg"><img src="icon-192.png" width="96" height="96" alt="VVY logo"><h2>VVY Mentor Connect</h2>' +
+    '<p>Please open your personal link sent by the VVY core team, or paste it here:</p>' +
+    '<input id="lk" placeholder="Paste your personal link" style="width:100%;max-width:360px;box-sizing:border-box;padding:12px;border:1px solid #CBD5E1;border-radius:10px;font-size:15px">' +
+    '<p><button id="go" style="height:44px;padding:0 20px;border:0;border-radius:10px;background:#0F766E;color:#fff;font-size:15px;font-weight:600">Open</button></p></div>';
+  document.getElementById('go').onclick = function () {
+    var v = document.getElementById('lk').value.trim(), m = v.match(/[?&]k=([0-9a-zA-Z]+)/), key = m ? m[1] : (/^[0-9a-zA-Z]{20,}$/.test(v) ? v : '');
+    if (!key) { alert('That does not look like a VVY Mentor Connect link.'); return; }
+    try { localStorage.setItem('vvy_k', key); } catch (e) {}
+    location.replace(location.pathname + '?k=' + key);
+  };
 } else {
   var f = document.createElement('iframe');
   f.src = APP + '?k=' + encodeURIComponent(k);
