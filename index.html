@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>VVY Mentor Connect</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="VVY Mentor">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#0F766E">
+<meta name="robots" content="noindex">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
+<style>
+html,body{margin:0;height:100%;background:#F4F6F8}
+iframe{position:fixed;top:0;left:0;width:100%;height:100%;border:0}
+.msg{font-family:system-ui,-apple-system,sans-serif;padding:60px 24px;text-align:center;color:#556274}
+</style>
+</head>
+<body>
+<script>
+var APP = 'https://script.google.com/macros/s/AKfycbx1CbgLCGyuGj26cJGkNQrU0OgRbDzkUrLPbFuxJZs2xuMF_cr15-gz_rEhjyGbNt4Oig/exec';
+var k = new URLSearchParams(location.search).get('k');
+try { if (k) localStorage.setItem('vvy_k', k); else k = localStorage.getItem('vvy_k'); } catch (e) {}
+if (!k) {
+  document.body.innerHTML = '<div class="msg"><img src="icon-192.png" width="96" height="96" alt="VVY logo"><h2>VVY Mentor Connect</h2><p>Please open your personal link sent by the VVY core team.</p></div>';
+} else {
+  var f = document.createElement('iframe');
+  f.src = APP + '?k=' + encodeURIComponent(k);
+  f.title = 'VVY Mentor Connect';
+  document.body.appendChild(f);
+}
+</script>
+</body>
+</html>
