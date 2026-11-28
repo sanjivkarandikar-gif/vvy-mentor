@@ -17,6 +17,12 @@ html{height:100%;overflow:hidden;overscroll-behavior:none;background:#F4F6F8}
 body{margin:0;position:fixed;top:0;left:0;right:0;bottom:0;overflow:hidden;overscroll-behavior:none;background:#F4F6F8}
 iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block}
 .msg{font-family:system-ui,-apple-system,sans-serif;padding:60px 24px;text-align:center;color:#556274}
+#ld{position:absolute;inset:0;z-index:5;background:#F4F6F8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#334155;transition:opacity .4s}
+#ld img{width:104px;height:104px;border-radius:52px;background:#fff;box-shadow:0 4px 14px rgba(15,23,42,.12)}
+#ld .t{font-size:18px;font-weight:600;color:#0F766E}
+#ld .s{font-size:14px;color:#64748B;max-width:300px;line-height:1.45}
+#ld .sp{width:34px;height:34px;border-radius:50%;border:4px solid #CCE7E2;border-top-color:#0F766E;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -40,6 +46,14 @@ if (!k) {
   f.src = APP + '?k=' + encodeURIComponent(k);
   f.title = 'VVY Mentor - Student Connect App';
   document.body.appendChild(f);
+  // Loading screen: stays until the app says its data has arrived (or 90 s at most).
+  var ld = document.createElement('div'); ld.id = 'ld';
+  ld.innerHTML = '<img src="icon-192.png" alt="VVY logo"><div class="t">Loading your students\u2019 data\u2026</div><div class="sp" aria-hidden="true"></div>' +
+    '<div class="s">This can take up to 30 seconds the first time.</div>';
+  document.body.appendChild(ld);
+  var hideLd = function () { if (!ld.parentNode) return; ld.style.opacity = '0'; setTimeout(function () { if (ld.parentNode) ld.parentNode.removeChild(ld); }, 450); };
+  window.addEventListener('message', function (e) { if (e.data === 'vvy-ready') hideLd(); });
+  setTimeout(hideLd, 90000);
   var settle = function () { if (window.visualViewport && window.visualViewport.scale > 1.01) return; if (window.scrollX || window.scrollY) window.scrollTo(0, 0); document.documentElement.scrollTop = 0; document.body.scrollTop = 0; };
   window.addEventListener('scroll', settle, { passive: true });
   window.addEventListener('focus', settle);
